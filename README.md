@@ -14,8 +14,8 @@ This is a brief outline of the roadmap, it will become longer and more detailed 
 
 Version | Description | Completion Status
 ------- | ----------- | -----------------
-x | Install Laravel and Laravel Jetstream | ⏳
-x | Setup logo and customise Tailwind | 🚫
+0.1.0 | Install Laravel and Laravel Jetstream | ✅
+0.1.0 | Setup logo and customise Tailwind | ⏳
 x | Adjust user data and create user roles/policies | 🚫
 x | Create District model and assign users to districts | 🚫
 x | Create models representing the different aspects of the QSA | 🚫
