@@ -14,10 +14,15 @@ This is a brief outline of the roadmap, it will become longer and more detailed 
 
 Version | Description | Completion Status
 ------- | ----------- | -----------------
-x | Install Laravel and Laravel Jetstream | 🚫
+x | Install Laravel and Laravel Jetstream | ⏳
 x | Setup logo and customise Tailwind | 🚫
 x | Adjust user data and create user roles/policies | 🚫
 x | Create District model and assign users to districts | 🚫
 x | Create models representing the different aspects of the QSA | 🚫
 x | Create pages for each aspect of the QSA and allow users to edit their data | 🚫
 x | Enable users with specific roles to view the data of others | 🚫
+
+## License
+This project's license is the GNU General Public License v3.0, see [LICENSE](https://github.com/louissoccard/myqsa/blob/main/LICENSE).
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
