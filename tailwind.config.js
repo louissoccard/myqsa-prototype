@@ -11,6 +11,7 @@ module.exports = {
 
     theme: {
         colors: {
+            'transparent': 'transparent',
             'gray': colors.trueGray,
             'purple': '#7413dc',
             'teal': '#00a794',
