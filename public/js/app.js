@@ -3781,6 +3781,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 window.darkMode = __webpack_require__(/*! ./darkMode */ "./resources/js/darkMode.js");
 window.darkMode.refresh();
+window.darkMode.autoOn();
 
 /***/ }),
 

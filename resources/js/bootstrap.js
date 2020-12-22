@@ -28,4 +28,5 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // });
 
 window.darkMode = require('./darkMode');
+window.darkMode.refresh();
 window.darkMode.autoOn();
