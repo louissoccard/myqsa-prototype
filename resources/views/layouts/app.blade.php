@@ -16,6 +16,8 @@
         @livewireStyles
 
         <!-- Scripts -->
+        <script src="{{ mix('js/scripts.js') }}"></script>
+        <x-dark-mode></x-dark-mode>
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">

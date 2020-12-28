@@ -65,6 +65,22 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::created(function($user) {
+            $user->preferences()->create();
+        });
+
+        static::deleting(function($user) {
+            $user->preferences()->delete();
+        });
+    }
+
+    public function preferences() {
+        return $this->hasOne(Preferences::class, 'user_id', 'id');
+    }
+
     /**
      * Get the QR code SVG of the user's two factor authentication QR code URL.
      * Overrides the default function to make the QR code black instead of a blue-grey colour

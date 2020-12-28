@@ -7,6 +7,19 @@ exports.refresh = function() {
     }
 }
 
+exports.update = function(value) {
+    if (value === 'light') {
+        exports.autoOff();
+        exports.off();
+    } else if (value === 'dark') {
+        exports.autoOff();
+        exports.on();
+    } else {
+        exports.refresh();
+        exports.autoOn();
+    }
+}
+
 // Returns whether the OS has dark mode enabled or not
 exports.listen = window.matchMedia('(prefers-color-scheme: dark)');
 

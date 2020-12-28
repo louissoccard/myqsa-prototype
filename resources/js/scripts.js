@@ -1,0 +1,1 @@
+window.darkMode = require('./darkMode');
