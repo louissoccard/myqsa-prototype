@@ -52,3 +52,11 @@ exports.on = function() {
 exports.off = function() {
     exports.set(false);
 }
+
+exports.toggle = function() {
+    if (exports.get()) {
+        exports.off();
+    } else {
+        exports.on();
+    }
+}

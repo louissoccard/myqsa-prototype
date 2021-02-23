@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+      x-data="{ isSideMenuOpen: false, isUserMenuOpen: false, isUserDropdownOpen: false }" class="h-full">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +10,9 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,700;0,800;0,900;1,400&display=swap"
+            rel="stylesheet">
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
@@ -17,24 +20,26 @@
 
         <!-- Scripts -->
         <script src="{{ mix('js/scripts.js') }}"></script>
-        <x-dark-mode></x-dark-mode>
+        <x-utilities.dark-mode></x-utilities.dark-mode>
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @livewire('navigation-dropdown')
+    <body class="flex flex-col h-full font-sans antialiased dark:bg-gray-900 text-grey-80 dark:text-grey-5"
+          :class="{ 'overflow-hidden': isSideMenuOpen }">
+        <x-interface.header></x-interface.header>
+        <div class="flex flex-1">
+            <x-interface.sidebar></x-interface.sidebar>
 
-            <!-- Page Heading -->
-            <header class="bg-white dark:bg-gray-800 dark:text-white shadow">
-                <div class="max-w-7xl mx-auto py-6 sm:py-10 px-4 sm:px-6 lg:px-8 text-2xl font-bold">
-                    {{ $header }}
-                </div>
-            </header>
+            <div class="flex flex-col flex-1 w-full">
+                @isset($pageHeader) {{ $pageHeader }} @endisset
+                <main class="overflow-y-auto">
+                    <div class="container mx-auto p-6 md:p-10 grid">
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+                        {{ $slot }}
+
+                    </div>
+                </main>
+            </div>
+
         </div>
 
         @stack('modals')

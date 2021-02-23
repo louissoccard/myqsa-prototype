@@ -1,21 +1,13 @@
-<x-form-section submit="updateAppearancePreferences">
-    <x-slot name="title">
-        {{ __('Appearance') }}
-    </x-slot>
+<x-interface.card title="Appearance" description="Change your preferred appearance with settings such as dark mode.">
 
-    <x-slot name="description">
-        {{ __('Change your preferred appearance with settings such as dark mode.') }}
-    </x-slot>
+    <x-account.form submit="updateAppearancePreferences">
 
-    <x-slot name="form">
-        <div class="col-span-6 sm:col-span-4">
-            <x-label for="dark_mode_preference" value="{{ __('Dark Mode') }}"></x-label>
-            <x-select id="dark_mode_preference" wire:model="dark_mode_preference">
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-                <option value="auto">Automatic</option>
-            </x-select>
-        </div>
+        <x-utilities.label for="dark_mode_preference" value="Dark Mode"></x-utilities.label>
+        <x-utilities.select id="dark_mode_preference" wire:model="dark_mode_preference">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="auto">Automatic</option>
+        </x-utilities.select>
 
         <script>
             document.addEventListener("DOMContentLoaded", () => {
@@ -24,21 +16,18 @@
                 });
             });
         </script>
-    </x-slot>
 
-    <x-slot name="actions">
-        <x-action-message class="mr-3" on="saved">
-            {{ __('Saved.') }}
-        </x-action-message>
+        <x-slot name="footer">
+            <x-utilities.action-message class="mr-3" on="saved">Saved.</x-utilities.action-message>
 
-        @error('dark_mode_preference')
-        <x-message class="mr-3" on="error" colour="red" text_colour="white">
-            {{ __("Something has gone wrong. Please try again later.") }}
-        </x-message>
-        @enderror
+            @error('dark_mode_preference')
+            <x-utilities.message class="mr-3" on="error" colour="red" text_colour="white">Something has gone wrong.
+                                                                                          Please try again later.
+            </x-utilities.message>
+            @enderror
 
-        <x-button wire:loading.attr="disabled">
-            {{ __('Save') }}
-        </x-button>
-    </x-slot>
-</x-form-section>
+            <x-utilities.button>Save</x-utilities.button>
+        </x-slot>
+
+    </x-account.form>
+</x-interface.card>

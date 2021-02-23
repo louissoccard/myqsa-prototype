@@ -1,6 +1,6 @@
 <x-guest-layout>
     <x-slot name="title">Login</x-slot>
-    <x-authentication-card>
+    <x-authentication.card>
 
         @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
@@ -12,33 +12,34 @@
             @csrf
 
             <div>
-                <x-label for="email" value="{{ __('Email') }}"></x-label>
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus></x-input>
+                <x-utilities.label for="email" value="Email"></x-utilities.label>
+                <x-utilities.input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                                   required autofocus></x-utilities.input>
             </div>
 
             <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}"></x-label>
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password"></x-input>
+                <x-utilities.label for="password" value="Password"></x-utilities.label>
+                <x-utilities.input id="password" class="block mt-1 w-full" type="password" name="password" required
+                                   autocomplete="current-password"></x-utilities.input>
             </div>
 
             <div class="block mt-4">
                 <label for="remember_me" class="flex items-center">
                     <input id="remember_me" type="checkbox" class="form-checkbox" name="remember">
-                    <span class="ml-2 text-sm text-gray-600 dark:text-gray-200">{{ __('Remember me') }}</span>
+                    <span class="ml-2 text-sm text-gray-600 dark:text-gray-200">Remember me</span>
                 </label>
             </div>
 
-            <x-validation-errors class="mt-4"></x-validation-errors>
+            <x-utilities.validation-errors class="mt-4"></x-utilities.validation-errors>
 
             <div class="flex items-center justify-end mt-8">
                 @if (Route::has('password.request'))
-                    <x-secondary-link href="{{ route('password.request') }}">{{ __('Forgot your password?') }}</x-secondary-link>
+                    <x-utilities.secondary-link href="{{ route('password.request') }}">Forgot your password?
+                    </x-utilities.secondary-link>
                 @endif
 
-                <x-button class="ml-4">
-                    {{ __('Login') }}
-                </x-button>
+                <x-utilities.button class="ml-4">Login</x-utilities.button>
             </div>
         </form>
-    </x-authentication-card>
+    </x-authentication.card>
 </x-guest-layout>

@@ -1,37 +1,40 @@
 <x-guest-layout>
     <x-slot name="title">Register</x-slot>
-    <x-authentication-card>
+    <x-authentication.card>
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
             <div>
-                <x-label for="name" value="{{ __('Name') }}"></x-label>
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name"></x-input>
+                <x-utilities.label for="name" value="Name"></x-utilities.label>
+                <x-utilities.input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
+                                   required autofocus autocomplete="name"></x-utilities.input>
             </div>
 
             <div class="mt-4">
-                <x-label for="email" value="{{ __('Email') }}"></x-label>
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required></x-input>
+                <x-utilities.label for="email" value="Email"></x-utilities.label>
+                <x-utilities.input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                                   required></x-utilities.input>
             </div>
 
             <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}"></x-label>
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password"></x-input>
+                <x-utilities.label for="password" value="Password"></x-utilities.label>
+                <x-utilities.input id="password" class="block mt-1 w-full" type="password" name="password" required
+                                   autocomplete="new-password"></x-utilities.input>
             </div>
 
             <div class="mt-4">
-                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}"></x-label>
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password"></x-input>
+                <x-utilities.label for="password_confirmation" value="Confirm Password"></x-utilities.label>
+                <x-utilities.input id="password_confirmation" class="block mt-1 w-full" type="password"
+                                   name="password_confirmation" required
+                                   autocomplete="new-password"></x-utilities.input>
             </div>
 
-            <x-validation-errors class="mt-4"></x-validation-errors>
+            <x-utilities.validation-errors class="mt-4"></x-utilities.validation-errors>
 
             <div class="flex items-center justify-end mt-8">
-                <x-secondary-link href="{{ route('login') }}">{{ __('Already registered?') }}</x-secondary-link>
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
+                <x-utilities.secondary-link href="{{ route('login') }}">Already registered?</x-utilities.secondary-link>
+                <x-utilities.button class="ml-4">Register</x-utilities.button>
             </div>
         </form>
-    </x-authentication-card>
+    </x-authentication.card>
 </x-guest-layout>

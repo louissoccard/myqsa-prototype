@@ -63,6 +63,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'first_name',
     ];
 
     protected static function boot() {
@@ -96,5 +97,9 @@ class User extends Authenticatable
         ))->writeString($this->twoFactorQrCodeUrl());
 
         return trim(substr($svg, strpos($svg, "\n") + 1));
+    }
+
+    public function getFirstNameAttribute() {
+        return explode(' ', $this->name)[0];
     }
 }

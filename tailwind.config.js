@@ -1,4 +1,4 @@
-const colors = require('tailwindcss/colors')
+const colors = require('tailwindcss/colors');
 
 module.exports = {
     purge: [
@@ -29,11 +29,41 @@ module.exports = {
             'grey-40': '#999999',
             'grey-60': '#666666',
             'grey-80': '#333333',
+
+            'purple-darkened': '#3a0a6e',
+            'teal-darkened': '#00a794',
+            'red-darkened': '#711709',
+            'pink-darkened': '#805a73',
+            'green-darkened': '#125528',
+            'navy-darkened': '#001d41',
+            'blue-darkened': '#003770',
+            'yellow-darkened': '#807314',
+            'grey-5-darkened': '#797979',
+            'grey-20-darkened': '#cccccc',
+            'grey-40-darkened': '#666666',
+            'grey-60-darkened': '#333333',
+            'grey-80-darkened': '#1a1a1a',
+
         },
 
         extend: {
+            minWidth: {
+                '80': '20rem',
+            },
+
+            maxWidth: {
+                'xxs': '10rem',
+                '2/5': '40%',
+                '1/2': '50%',
+                '9/10': '90%',
+            },
+
             fontFamily: {
                 sans: ['"Nunito Sans"', 'sans-serif'],
+            },
+
+            transitionProperty: {
+                'border-color': 'border-color',
             },
         },
     },
