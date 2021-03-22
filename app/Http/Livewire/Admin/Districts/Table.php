@@ -24,7 +24,7 @@ class Table extends NumberedTableComponent
     public $original_sort_attribute = 'name';
 
     // Add the buttons and modals that appear in the section before the table
-    public $header_view = 'components.admin.districts.table-header';
+    public $header_view = 'components.admin-centre.districts.table-header';
 
     // Should be enough to display all districts in one page
     public $per_page = 30;
@@ -92,7 +92,7 @@ class Table extends NumberedTableComponent
         return [
             Column::make('Name')->sortable()->searchable(),
             Column::make('Cluster', 'cluster.name')->sortable(),
-            Column::make('Manage')->view('admin.districts.menu'),
+            Column::make('Manage')->view('admin-centre.districts.menu'),
         ];
     }
 

@@ -4,7 +4,7 @@
     <div class="flex-1 flex flex-col justify-between py-4 text-black dark:text-white">
         <x-interface.main-menu></x-interface.main-menu>
 
-        <div class="inline-block px-6 text-grey-60 dark:text-grey-20">
+        <div class="inline-block px-6 mt-4 text-grey-60 dark:text-grey-20">
             <h5>© Hampshire Scouts {{ date('Y') }}</h5>
             <a class="font-bold hover:underline" href="#">Privacy Policy</a>
         </div>
@@ -40,7 +40,7 @@
             <x-interface.accounts-menu paddingX="2"></x-interface.accounts-menu>
         </div>
 
-        <div class="inline-block px-6 text-grey-60 dark:text-grey-20">
+        <div class="inline-block px-6  mt-4 text-grey-60 dark:text-grey-20">
             <h5>© Hampshire Scouts {{ date('Y') }}</h5>
             <a class="font-bold hover:underline" href="#">Privacy Policy</a>
         </div>

@@ -15,25 +15,19 @@
 
 
     <div class="flex flex-row flex-wrap">
-        <x-award.card title="Membership" href="#" progressId="membership-progress" percentage="100"
+        <x-award.card title="Membership" href="{{ route('award.membership') }}" progressId="membership-progress"
+                      percentage="100"
                       class="xl:pr-2 mb-4"></x-award.card>
-        <x-award.card title="Nights Away" href="#" progressId="nights-away-progress" percentage="75"
+        <x-award.card title="Nights Away" href="{{ route('award.nights-away') }}" progressId="nights-away-progress"
+                      percentage="75"
                       class="xl:pl-2 mb-4"></x-award.card>
-        <x-award.card title="ICV List" href="#" progressId="icv-progress" percentage="25"
+        <x-award.card title="ICV List" href="{{ route('award.icv-list') }}" progressId="icv-progress" percentage="25"
                       class="xl:pr-2 mb-4"></x-award.card>
-        <x-award.card title="DofE" href="#" progressId="dofe-progress" percentage="100"
+        <x-award.card title="DofE" href="{{ route('award.dofe') }}" progressId="dofe-progress" percentage="100"
                       class="xl:pl-2 mb-4"></x-award.card>
-
-        <a href="#" class="w-full">
-            <div class="bg-grey-5 dark:bg-gray-800 p-4 border-2 border-transparent hover:border-blue
-            transition-all duration-300 select-none cursor-pointer w-full">
-                <div class="flex justify-between pb-2 mb-8 border-b border-grey-20 dark:border-grey-60">
-                    <h3 class="text-xl font-bold">Presentation and Sign Off</h3>
-                    <x-utilities.icon>external-link</x-utilities.icon>
-                </div>
-            </div>
-        </a>
-
+        <x-award.card title="Presentation" href="{{ route('award.presentation') }}"
+                      class="xl:pr-2 mb-4 xl:mb-0"></x-award.card>
+        <x-award.card title="Sign Off" href="{{ route('award.sign-off') }}" class="xl:pl-2"></x-award.card>
     </div>
 
 </x-app-layout>

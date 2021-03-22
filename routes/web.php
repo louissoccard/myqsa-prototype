@@ -30,20 +30,30 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
-    Route::get('/award', [AwardController::class, 'show'])->name('award');
 
-    Route::name('admin.')->group(function () {
+    Route::name('award.')->group(function () {
+        Route::get('/award', [AwardController::class, 'show'])->name('show');
+        Route::get('/award/membership', [AwardController::class, 'show'])->name('membership');
+        Route::get('/award/nights-away', [AwardController::class, 'show'])->name('nights-away');
+        Route::get('/award/icv-list', [AwardController::class, 'show'])->name('icv-list');
+        Route::get('/award/dofe', [AwardController::class, 'show'])->name('dofe');
+        Route::get('/award/challenges', [AwardController::class, 'show'])->name('challenges');
+        Route::get('/award/presentation', [AwardController::class, 'show'])->name('presentation');
+        Route::get('/award/sign-off', [AwardController::class, 'show'])->name('sign-off');
+    });
+
+    Route::name('admin-centre.')->group(function () {
         Route::get('/admin-centre', function () {
-            return view('admin');
+            return view('admin-centre');
         })->name('show');
-        Route::get('/admin/accounts', function () {
-            return view('admin.accounts');
+        Route::get('/admin-centre/accounts', function () {
+            return view('admin-centre.accounts');
         })->name('accounts');
-        Route::get('/admin/districts', function () {
-            return view('admin.districts.show');
+        Route::get('/admin-centre/districts', function () {
+            return view('admin-centre.districts.show');
         })->name('districts');
-        Route::get('/admin/clusters', function () {
-            return view('admin.clusters.show');
+        Route::get('/admin-centre/clusters', function () {
+            return view('admin-centre.clusters.show');
         })->name('clusters');
     });
 });

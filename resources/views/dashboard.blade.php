@@ -4,7 +4,7 @@
     <x-dashboard.welcome-message class="mb-4" firstName="{{ $user->first_name }}"></x-dashboard.welcome-message>
 
     <div class="mb-4">
-        <x-interface.card title="Queen's Scout Award" href="{{ route('award') }}">
+        <x-interface.card title="Queen's Scout Award" href="{{ route('award.show') }}">
             <div
                 class="flex flex-row flex-wrap lg:flex-nowrap justify-center items-start mt-8 lg:space-x-6">
                 <x-utilities.circular-progress-bar barId="membership-progress"
