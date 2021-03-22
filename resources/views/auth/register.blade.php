@@ -29,6 +29,17 @@
                                    autocomplete="new-password"></x-utilities.input>
             </div>
 
+            <div class="mt-4">
+                <x-utilities.label for="district" value="District"></x-utilities.label>
+                <x-utilities.select id="district" name="district">
+                    <option value="null">Select...</option>
+                    @foreach(\App\Models\District::orderBy('name')->get() as $district)
+                        <option value="{{ $district->id }}">{{ $district->name }}</option>
+                    @endforeach
+                </x-utilities.select>
+            </div>
+
+
             <x-utilities.validation-errors class="mt-4"></x-utilities.validation-errors>
 
             <div class="flex items-center justify-end mt-8">

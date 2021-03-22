@@ -8,7 +8,6 @@ use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -33,6 +32,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'district_id',
     ];
 
     /**
@@ -99,7 +99,23 @@ class User extends Authenticatable
         return trim(substr($svg, strpos($svg, "\n") + 1));
     }
 
-    public function getFirstNameAttribute() {
+    /**
+     * Get the user's first name from their full name
+     *
+     * @return string first name
+     */
+    public function getFirstNameAttribute()
+    {
         return explode(' ', $this->name)[0];
+    }
+
+    /**
+     * Get the user's district
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function district()
+    {
+        return $this->belongsTo(District::class);
     }
 }

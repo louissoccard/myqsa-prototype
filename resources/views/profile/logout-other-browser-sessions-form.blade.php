@@ -17,42 +17,44 @@
 
         <div>
             @if (count($this->sessions) > 0)
-                <div class="px-6 space-y-6">
-                    <!-- Other Browser Sessions -->
-                    @foreach ($this->sessions as $session)
-                        <div
-                            class="flex items-center justify-between p-2 border-t border-b border-grey-20 dark:border-grey-60">
-                            <div class="mr-3">
-                                <div>
-                                    @if($session->agent->platform() === 'OS X')
-                                        macOS - {{ $session->agent->browser() }}
-                                    @else
-                                        {{ $session->agent->platform() }} - {{ $session->agent->browser() }}
-                                    @endif
-
-                                </div>
-
-                                <div>
-                                    <div class="text-xs">
-                                        {{ $session->ip_address }}
-                                        @if ($session->is_current_device)
-                                            <span class="text-green font-bold">(this device)</span>
+                <div class="px-6">
+                    <div class="border-t border-grey-20 dark:border-grey-60">
+                        <!-- Other Browser Sessions -->
+                        @foreach ($this->sessions as $session)
+                            <div
+                                class="flex items-center justify-between p-2 border-b border-grey-20 dark:border-grey-60">
+                                <div class="mr-3">
+                                    <div>
+                                        @if($session->agent->platform() === 'OS X')
+                                            macOS - {{ $session->agent->browser() }}
                                         @else
-                                            (Last active {{ $session->last_active }})
+                                            {{ $session->agent->platform() }} - {{ $session->agent->browser() }}
                                         @endif
+
+                                    </div>
+
+                                    <div>
+                                        <div class="text-xs">
+                                            {{ $session->ip_address }}
+                                            @if ($session->is_current_device)
+                                                <span class="text-green font-bold">(this device)</span>
+                                            @else
+                                                (Last active {{ $session->last_active }})
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div>
-                                @if ($session->agent->isDesktop())
-                                    <x-utilities.icon>monitor</x-utilities.icon>
-                                @else
-                                    <x-utilities.icon>smartphone</x-utilities.icon>
-                                @endif
+                                <div>
+                                    @if ($session->agent->isDesktop())
+                                        <x-utilities.icon>monitor</x-utilities.icon>
+                                    @else
+                                        <x-utilities.icon>smartphone</x-utilities.icon>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             @endif
         </div>

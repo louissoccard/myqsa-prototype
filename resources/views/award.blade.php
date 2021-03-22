@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="title">Award</x-slot>
 
-    @if($user !== Auth::user())
+    @if($user->isNot(Auth::user()))
         <x-slot name="pageHeader">
             <div class="flex flex-row justify-between items-center w-full bg-grey-20 dark:bg-gray-700 p-4">
                 <p class="text-lg">You are viewing {{ $user->name }}'@if(substr($user->name, -1) !== 's')s @endif award

@@ -6,6 +6,6 @@
     </x-interface.menu-item>
     <x-interface.menu-item href="#" icon="users">My District</x-interface.menu-item>
     <x-interface.menu-item active="{{ request()->routeIs('admin.*') }}" href="{{ route('admin.show') }}" icon="grid">
-        Admin
+        Admin Centre
     </x-interface.menu-item>
 </div>

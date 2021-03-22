@@ -21,8 +21,8 @@
             <x-utilities.action-message class="mr-3" on="saved">Saved.</x-utilities.action-message>
 
             @error('dark_mode_preference')
-            <x-utilities.message class="mr-3" on="error" colour="red" text_colour="white">Something has gone wrong.
-                                                                                          Please try again later.
+            <x-utilities.message class="mr-3" on="error" colour="red" text_colour="white">
+                Something has gone wrong. Please try again later.
             </x-utilities.message>
             @enderror
 

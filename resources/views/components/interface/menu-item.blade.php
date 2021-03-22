@@ -21,7 +21,7 @@
         <div class="inline-block" style="width: calc(0.75rem + 18px)">&nbsp;</div>
     @endif
 
-    <@if($href === false || $active == true)p @else()a href="{{ $href }}" @endif
+    <a href="{{ $href }}"
         {{ $attributes->merge(['class' => ("inline-block font-bold" . $classes)]) }}>
 
         @if($icon !== false)
@@ -30,5 +30,5 @@
 
         {{ $slot }}
 
-    </@if($href === false || $active == true)p @else()a @endif>
+    </a>
 </div>

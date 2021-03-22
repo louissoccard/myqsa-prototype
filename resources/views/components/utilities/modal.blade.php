@@ -1,4 +1,4 @@
-@props(['id', 'maxWidth'])
+@props(['id', 'maxWidth', 'backgroundDismissible' => true])
 
 @php
     $id = $id ?? md5($attributes->wire('model'));
@@ -50,7 +50,8 @@
     class="fixed top-0 bottom-0 inset-x-0 px-4 py-6 z-50 sm:px-0 sm:flex sm:items-center sm:justify-center"
     style="display: none;"
 >
-    <div x-show="show" class="fixed inset-0 transform transition-all" x-on:click="show = false"
+    <div x-show="show" class="fixed inset-0 transform transition-all"
+         @if($backgroundDismissible === true) x-on:click="show = false" @endif
          x-transition:enter="ease-out duration-300"
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100"
