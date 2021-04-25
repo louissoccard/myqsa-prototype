@@ -29,7 +29,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
         'district_id',
@@ -63,17 +64,17 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
-        'first_name',
     ];
 
-    protected static function boot() {
-        parent::boot();
+    protected static function booted()
+    {
+        parent::booted();
 
-        static::created(function($user) {
+        static::created(function ($user) {
             $user->preferences()->create();
         });
 
-        static::deleting(function($user) {
+        static::deleting(function ($user) {
             $user->preferences()->delete();
         });
     }
@@ -100,16 +101,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's first name from their full name
-     *
-     * @return string first name
-     */
-    public function getFirstNameAttribute()
-    {
-        return explode(' ', $this->name)[0];
-    }
-
-    /**
      * Get the user's district
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -117,5 +108,27 @@ class User extends Authenticatable
     public function district()
     {
         return $this->belongsTo(District::class);
+    }
+
+    /**
+     * Change the user's full name when their first name is updated
+     *
+     * @param $value string the new first name
+     */
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = $value;
+        $this->attributes['full_name']  = $value.' '.$this->last_name;
+    }
+
+    /**
+     * Change the user's full name when their last name is updated
+     *
+     * @param $value string the new last name
+     */
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = $value;
+        $this->attributes['full_name'] = $this->first_name.' '.$value;
     }
 }

@@ -1,4 +1,4 @@
-<div class="overflow-y-auto">
+<div>
     <x-interface.menu-item active="{{ request()->routeIs('dashboard') }}" href="{{ route('dashboard') }}"
                            icon="layout">Dashboard
     </x-interface.menu-item>

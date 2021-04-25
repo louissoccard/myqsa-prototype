@@ -1,6 +1,6 @@
 <!-- Desktop sidebar -->
 <aside
-    class="z-20 hidden w-64 overflow-y-auto bg-gray-50 dark:bg-gray-800 md:flex flex-shrink-0 shadow cursor-default select-none">
+    class="z-20 hidden fixed left-0 bottom-0 top-16 w-64 overflow-y-auto bg-gray-50 dark:bg-gray-800 md:flex flex-shrink-0 shadow cursor-default select-none">
     <div class="flex-1 flex flex-col justify-between py-4 text-black dark:text-white">
         <x-interface.main-menu></x-interface.main-menu>
 
@@ -53,5 +53,5 @@
      x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
      x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
      x-transition:leave-end="opacity-0"
-     class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"></div>
+     class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center md:hidden"></div>
 

@@ -65,6 +65,10 @@ module.exports = {
             transitionProperty: {
                 'border-color': 'border-color',
             },
+
+            zIndex: {
+                '100': '100',
+            },
         },
     },
 

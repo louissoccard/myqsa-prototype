@@ -1088,7 +1088,7 @@ module.exports = {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -1101,22 +1101,43 @@ module.exports = {
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 (() => {
-/*!*********************************!*\
-  !*** ./resources/js/scripts.js ***!
-  \*********************************/
-window.darkMode = __webpack_require__(/*! ./darkMode */ "./resources/js/darkMode.js");
+    /*!*********************************!*\
+      !*** ./resources/js/scripts.js ***!
+      \*********************************/
+    window.darkMode = __webpack_require__(/*! ./darkMode */ "./resources/js/darkMode.js");
 
-__webpack_require__(/*! ./progressBars */ "./resources/js/progressBars.js"); // window.data = require('./uiBoot');
+    __webpack_require__(/*! ./progressBars */ "./resources/js/progressBars.js"); // window.data = require('./uiBoot');
+
+
+    document.onkeydown = function (event) {
+        if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.code === 'KeyD') {
+            event.preventDefault();
+            localStorage.removeItem('darkMode');
+            window.darkMode.update();
+        } else if ((event.ctrlKey || event.metaKey) && event.code === 'KeyD') {
+            event.preventDefault();
+            var darkModeValue = localStorage.getItem('darkMode');
+
+            if (darkModeValue === null) {
+                localStorage.setItem('darkMode', !window.darkMode.get());
+                window.darkMode.toggle();
+            } else {
+                var parsed = JSON.parse(darkModeValue);
+                localStorage.setItem('darkMode', !parsed);
+                window.darkMode.update(!parsed ? 'dark' : 'light');
+            }
+        }
+    };
 })();
 
 /******/ })()

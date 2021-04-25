@@ -1,12 +1,15 @@
-@props(['id' => null, 'maxWidth' => null, 'backgroundDismissible' => true])
+@props(['id' => null, 'maxWidth' => null, 'zIndex' => '30', 'backgroundDismissible' => true])
 
-<x-utilities.modal :id="$id" :maxWidth="$maxWidth" :backgroundDismissible="$backgroundDismissible" {{ $attributes }}>
+<x-utilities.modal :id="$id" :maxWidth="$maxWidth" :backgroundDismissible="$backgroundDismissible"
+                   :zIndex="$zIndex" {{ $attributes }}>
     <div class="px-6 py-4">
-        <div class="text-lg dark:text-white font-bold">
-            {{ $title }}
-        </div>
+        @isset($title)
+            <div class="text-lg dark:text-white font-bold">
+                {{ $title }}
+            </div>
+        @endisset
 
-        <div class="mt-4">
+        <div @isset($title) class="mt-4" @endisset>
             {{ $content }}
         </div>
     </div>

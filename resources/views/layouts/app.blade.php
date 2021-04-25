@@ -29,16 +29,17 @@
         <x-utilities.dark-mode></x-utilities.dark-mode>
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="flex flex-col h-full font-sans antialiased dark:bg-gray-900 text-grey-80 dark:text-grey-5"
-          :class="{ 'overflow-hidden': isSideMenuOpen }">
+    <body
+        class="flex flex-col h-full font-sans antialiased dark:bg-gray-900 text-grey-80 dark:text-grey-5 md:overflow-auto"
+        :class="{ 'overflow-hidden': isSideMenuOpen || isUserMenuOpen }">
         <x-interface.header></x-interface.header>
         <div class="flex flex-1">
             <x-interface.sidebar></x-interface.sidebar>
 
-            <div class="flex flex-col flex-1 w-full">
+            <div class="flex flex-col flex-1 relative w-full mt-16 md:ml-64">
                 @isset($pageHeader) {{ $pageHeader }} @endisset
                 <main class="overflow-y-auto">
-                    <div class="container mx-auto p-6 md:p-10 grid">
+                    <div class="container mx-auto p-6 md:py-6 md:px-10 grid">
 
                         {{ $slot }}
 

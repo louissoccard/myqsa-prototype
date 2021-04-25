@@ -17,9 +17,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([DistrictSeeder::class]);
 
-        // Test user
-        User::create(['name'     => 'Louis Soccard', 'email' => 'louis.soccard@hampshirescouts.org.uk',
-                      'password' => Hash::make('password'), 'district_id' => 1
+        // Test users
+        User::create([
+            'first_name'  => 'Louis',
+            'last_name'   => 'Soccard',
+            'full_name'   => 'Louis Soccard',
+            'email'       => 'louis.soccard@hampshirescouts.org.uk',
+            'password'    => Hash::make('password'),
+            'district_id' => 1,
         ]);
+
+        User::factory()->count(10)->create();
     }
 }

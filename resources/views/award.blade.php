@@ -3,12 +3,15 @@
 
     @if($user->isNot(Auth::user()))
         <x-slot name="pageHeader">
-            <div class="flex flex-row justify-between items-center w-full bg-grey-20 dark:bg-gray-700 p-4">
-                <p class="text-lg">You are viewing {{ $user->name }}'@if(substr($user->name, -1) !== 's')s @endif award
-                                   record.</p>
+            <div
+                class="flex flex-row justify-between items-center fixed top-16 z-10 left-0 md:left-64 right-0 h-14 bg-gray-200 dark:bg-gray-700 px-6 md:px-10">
+                <p class="text-lg">You are viewing {{ Str::namePlural($user->full_name) }} award record.</p>
+                <a href="{{ route('award.clear') }}">
+                    <x-utilities.icon>x</x-utilities.icon>
+                </a>
             </div>
         </x-slot>
-        <h2 class="text-2xl font-black mb-4">Queen's Scout Award</h2>
+        <h2 class="text-2xl font-black mt-14 mb-4">Queen's Scout Award</h2>
     @else
         <h2 class="text-2xl font-black mb-4">Your Queen's Scout Award</h2>
     @endif

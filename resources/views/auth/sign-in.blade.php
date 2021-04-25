@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <x-slot name="title">Login</x-slot>
+    <x-slot name="title">Sign In</x-slot>
     <x-authentication.card>
 
         @if (session('status'))
@@ -8,13 +8,13 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('sign-in') }}">
             @csrf
 
             <div>
                 <x-utilities.label for="email" value="Email"></x-utilities.label>
                 <x-utilities.input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                                   required autofocus></x-utilities.input>
+                                   required autofocus autocomplete="email" autocapitalize="off"></x-utilities.input>
             </div>
 
             <div class="mt-4">
@@ -38,7 +38,7 @@
                     </x-utilities.secondary-link>
                 @endif
 
-                <x-utilities.button class="ml-4">Login</x-utilities.button>
+                <x-utilities.button class="ml-4">Sign In</x-utilities.button>
             </div>
         </form>
     </x-authentication.card>

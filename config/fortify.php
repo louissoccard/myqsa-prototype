@@ -103,7 +103,7 @@ return [
     */
 
     'limiters' => [
-        'login' => null,
+        'sign-in' => null,
     ],
 
     /*

@@ -15,7 +15,7 @@
 </span>
 
 @once
-    <x-utilities.dialog-modal wire:model="confirmingPassword">
+    <x-utilities.dialog-modal wire:model="confirmingPassword" zIndex="100" background_dismissable="false">
         <x-slot name="title">
             {{ $title }}
         </x-slot>
@@ -36,7 +36,7 @@
 
         <x-slot name="footer">
             <x-utilities.button wire:click="stopConfirmingPassword" wire:loading.attr="disabled" colour="grey-60">
-                Nevermind
+                Cancel
             </x-utilities.button>
 
             <x-utilities.button class="ml-2" wire:click="confirmPassword" wire:loading.attr="disabled">

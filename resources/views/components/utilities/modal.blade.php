@@ -1,4 +1,4 @@
-@props(['id', 'maxWidth', 'backgroundDismissible' => true])
+@props(['id', 'maxWidth', 'zIndex' => '30', 'backgroundDismissible' => true])
 
 @php
     $id = $id ?? md5($attributes->wire('model'));
@@ -15,6 +15,15 @@
             break;
         case 'xl':
             $maxWidth = 'sm:max-w-xl';
+            break;
+        case '3xl':
+            $maxWidth = 'sm:max-w-3xl';
+            break;
+        case '4xl':
+            $maxWidth = 'sm:max-w-4xl';
+            break;
+        case '5xl':
+            $maxWidth = 'sm:max-w-5xl';
             break;
         case '2xl':
         default:
@@ -47,7 +56,7 @@
     x-on:keydown.shift.tab.prevent="prevFocusable().focus()"
     x-show="show"
     id="{{ $id }}"
-    class="fixed top-0 bottom-0 inset-x-0 px-4 py-6 z-50 sm:px-0 sm:flex sm:items-center sm:justify-center"
+    class="fixed top-0 bottom-0 inset-x-0 px-4 py-6 z-{{ $zIndex }} sm:px-0 sm:flex sm:items-center sm:justify-center"
     style="display: none;"
 >
     <div x-show="show" class="fixed inset-0 transform transition-all"

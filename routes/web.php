@@ -7,11 +7,23 @@ use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\ConfirmablePasswordController;
 use Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController;
+use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
 use Laravel\Fortify\Http\Controllers\EmailVerificationPromptController;
 use Laravel\Fortify\Http\Controllers\NewPasswordController;
+use Laravel\Fortify\Http\Controllers\PasswordController;
 use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
+use Laravel\Fortify\Http\Controllers\ProfileInformationController;
+use Laravel\Fortify\Http\Controllers\RecoveryCodeController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticatedSessionController;
+use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
+use Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController;
+use Laravel\Fortify\Http\Controllers\VerifyEmailController;
+use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
+use Laravel\Jetstream\Http\Controllers\Livewire\ApiTokenController;
+use Laravel\Jetstream\Http\Controllers\Livewire\TeamController;
+use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController;
+use Laravel\Jetstream\Jetstream;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +45,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::name('award.')->group(function () {
         Route::get('/award', [AwardController::class, 'show'])->name('show');
+        Route::get('/award/clear', [AwardController::class, 'clear'])->name('clear');
         Route::get('/award/membership', [AwardController::class, 'show'])->name('membership');
         Route::get('/award/nights-away', [AwardController::class, 'show'])->name('nights-away');
         Route::get('/award/icv-list', [AwardController::class, 'show'])->name('icv-list');
@@ -47,7 +60,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             return view('admin-centre');
         })->name('show');
         Route::get('/admin-centre/accounts', function () {
-            return view('admin-centre.accounts');
+            return view('admin-centre.accounts.show');
         })->name('accounts');
         Route::get('/admin-centre/districts', function () {
             return view('admin-centre.districts.show');
@@ -58,58 +71,146 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     });
 });
 
-Route::get('/sign-in', [AuthenticatedSessionController::class, 'create'])
-     ->middleware(['guest'])
-     ->name('login');
+Route::group(['middleware' => config('jetstream.middleware', ['web'])], function () {
+    Route::group(['middleware' => ['auth', 'verified']], function () {
+        // User & Profile...
+        Route::get('/account/manage', [UserProfileController::class, 'show'])
+             ->name('account.manage.show');
 
-$limiter = config('fortify.limiters.login');
+        // API...
+        if (Jetstream::hasApiFeatures()) {
+            Route::get('/user/api-tokens', [ApiTokenController::class, 'index'])->name('api-tokens.index');
+        }
 
-Route::post('/sign-in', [AuthenticatedSessionController::class, 'store'])
-     ->middleware(array_filter([
-         'guest',
-         $limiter ? 'throttle:'.$limiter : null,
-     ]));
+        // Teams...
+        if (Jetstream::hasTeamFeatures()) {
+            Route::get('/teams/create', [TeamController::class, 'create'])->name('teams.create');
+            Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
+            Route::put('/current-team', [CurrentTeamController::class, 'update'])->name('current-team.update');
+        }
+    });
+});
 
-Route::post('/sign-out', [AuthenticatedSessionController::class, 'destroy'])
-     ->name('logout');
+Route::group(['middleware' => config('fortify.middleware', ['web'])], function () {
 
-// Password Reset...
-if (Features::enabled(Features::resetPasswords())) {
-    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
+    Route::get('/sign-in', [AuthenticatedSessionController::class, 'create'])
          ->middleware(['guest'])
-         ->name('password.request');
+         ->name('sign-in');
 
-    Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
+    $limiter = config('fortify.limiters.login');
+
+    Route::post('/sign-in', [AuthenticatedSessionController::class, 'store'])
+         ->middleware(array_filter([
+             'guest',
+             $limiter ? 'throttle:'.$limiter : null,
+         ]));
+
+    Route::get('/sign-out', [AuthenticatedSessionController::class, 'destroy'])
+         ->name('sign-out');
+
+    Route::post('/sign-out', [AuthenticatedSessionController::class, 'destroy'])
+         ->name('sign-out');
+
+    // Password Reset...
+    if (Features::enabled(Features::resetPasswords())) {
+        Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
+             ->middleware(['guest'])
+             ->name('password.request');
+
+        Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
+             ->middleware(['guest'])
+             ->name('password.reset');
+    }
+
+    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
          ->middleware(['guest'])
-         ->name('password.reset');
-}
+         ->name('password.email');
 
-// Registration...
-if (Features::enabled(Features::registration())) {
-    Route::get('/register', [RegisteredUserController::class, 'create'])
+    Route::post('/reset-password', [NewPasswordController::class, 'store'])
          ->middleware(['guest'])
-         ->name('register');
-}
+         ->name('password.update');
 
-// Email Verification...
-if (Features::enabled(Features::emailVerification())) {
-    Route::get('/email/verify', [EmailVerificationPromptController::class, '__invoke'])
+
+    // Registration...
+    if (Features::enabled(Features::registration())) {
+        Route::get('/register', [RegisteredUserController::class, 'create'])
+             ->middleware(['guest'])
+             ->name('register');
+    }
+
+    Route::post('/register', [RegisteredUserController::class, 'store'])
+         ->middleware(['guest']);
+
+
+    // Email Verification...
+    if (Features::enabled(Features::emailVerification())) {
+        Route::get('/email/verify', [EmailVerificationPromptController::class, '__invoke'])
+             ->middleware(['auth'])
+             ->name('verification.notice');
+    }
+
+    Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
+         ->middleware(['auth', 'signed', 'throttle:6,1'])
+         ->name('verification.verify');
+
+    Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+         ->middleware(['auth', 'throttle:6,1'])
+         ->name('verification.send');
+
+    // Profile Information...
+    if (Features::enabled(Features::updateProfileInformation())) {
+        Route::put('/account/profile-information', [ProfileInformationController::class, 'update'])
+             ->middleware(['auth'])
+             ->name('user-profile-information.update');
+    }
+
+    // Passwords...
+    if (Features::enabled(Features::updatePasswords())) {
+        Route::put('/account/password', [PasswordController::class, 'update'])
+             ->middleware(['auth'])
+             ->name('user-password.update');
+    }
+
+    // Password Confirmation...
+    Route::get('/account/confirm-password', [ConfirmablePasswordController::class, 'show'])
          ->middleware(['auth'])
-         ->name('verification.notice');
-}
+         ->name('password.confirm');
 
-// Password Confirmation...
-Route::get('/user/confirm-password', [ConfirmablePasswordController::class, 'show'])
-     ->middleware(['auth'])
-     ->name('password.confirm');
+    Route::get('/account/confirmed-password-status', [ConfirmedPasswordStatusController::class, 'show'])
+         ->middleware(['auth'])
+         ->name('password.confirmation');
 
-Route::get('/user/confirmed-password-status', [ConfirmedPasswordStatusController::class, 'show'])
-     ->middleware(['auth'])
-     ->name('password.confirmation');
 
-// Two Factor Authentication...
-if (Features::enabled(Features::twoFactorAuthentication())) {
-    Route::get('/two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create'])
-         ->middleware(['guest'])
-         ->name('two-factor.login');
-}
+    Route::post('/account/confirm-password', [ConfirmablePasswordController::class, 'store'])
+         ->middleware(['auth']);
+
+    // Two Factor Authentication...
+    if (Features::enabled(Features::twoFactorAuthentication())) {
+        Route::get('/two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'create'])
+             ->middleware(['guest'])
+             ->name('two-factor.login');
+    }
+
+    Route::post('/two-factor-challenge', [TwoFactorAuthenticatedSessionController::class, 'store'])
+         ->middleware(['guest']);
+
+    $twoFactorMiddleware = Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword')
+        ? ['auth', 'password.confirm']
+        : ['auth'];
+
+    Route::post('/account/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])
+         ->middleware($twoFactorMiddleware);
+
+    Route::delete('/account/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])
+         ->middleware($twoFactorMiddleware);
+
+    Route::get('/account/two-factor-qr-code', [TwoFactorQrCodeController::class, 'show'])
+         ->middleware($twoFactorMiddleware);
+
+    Route::get('/account/two-factor-recovery-codes', [RecoveryCodeController::class, 'index'])
+         ->middleware($twoFactorMiddleware);
+
+    Route::post('/account/two-factor-recovery-codes', [RecoveryCodeController::class, 'store'])
+         ->middleware($twoFactorMiddleware);
+
+});

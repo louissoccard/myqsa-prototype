@@ -33,10 +33,7 @@
         </x-slot>
         <x-slot name="footer">
             <x-utilities.button colour="grey-40" class="mr-2" wire:click="closeAddModal">Cancel</x-utilities.button>
-            <x-utilities.button colour="navy" wire:click="addCluster">
-                <x-utilities.icon size="18" class="mr-1">plus</x-utilities.icon>
-                Add
-            </x-utilities.button>
+            <x-utilities.button colour="navy" wire:click="addCluster" icon="plus">Add</x-utilities.button>
         </x-slot>
     </x-utilities.dialog-modal>
 </div>

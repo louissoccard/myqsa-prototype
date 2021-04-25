@@ -5,7 +5,7 @@
                 <x-utilities.link-button class="flex justify-center" href="{{ route('dashboard') }}">Dashboard
                 </x-utilities.link-button>
             @else
-                <x-utilities.link-button class="mb-4 flex justify-center" href="{{ route('login') }}">Login
+                <x-utilities.link-button class="mb-4 flex justify-center" href="{{ route('sign-in') }}">Login
                 </x-utilities.link-button>
                 <x-utilities.link-button class="flex justify-center" href="{{ route('register') }}">Register
                 </x-utilities.link-button>

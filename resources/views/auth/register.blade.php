@@ -4,16 +4,25 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <div>
-                <x-utilities.label for="name" value="Name"></x-utilities.label>
-                <x-utilities.input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
-                                   required autofocus autocomplete="name"></x-utilities.input>
+            <div class="flex justify-between">
+                <div class="w-1/2 pr-2">
+                    <x-utilities.label for="first_name" value="First Name"></x-utilities.label>
+                    <x-utilities.input id="first_name" class="block mt-1" type="text" name="first_name"
+                                       :value="old('first_name')"
+                                       required autofocus autocomplete="given-name"></x-utilities.input>
+                </div>
+                <div class="w-1/2 pl-2">
+                    <x-utilities.label for="last_name" value="Last Name"></x-utilities.label>
+                    <x-utilities.input id="last_name" class="block mt-1" type="text" name="last_name"
+                                       :value="old('last_name')"
+                                       required autocomplete="family-name"></x-utilities.input>
+                </div>
             </div>
 
             <div class="mt-4">
                 <x-utilities.label for="email" value="Email"></x-utilities.label>
                 <x-utilities.input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                                   required></x-utilities.input>
+                                   required autocomplete="email"></x-utilities.input>
             </div>
 
             <div class="mt-4">
@@ -43,7 +52,8 @@
             <x-utilities.validation-errors class="mt-4"></x-utilities.validation-errors>
 
             <div class="flex items-center justify-end mt-8">
-                <x-utilities.secondary-link href="{{ route('login') }}">Already registered?</x-utilities.secondary-link>
+                <x-utilities.secondary-link href="{{ route('sign-in') }}">Already registered?
+                </x-utilities.secondary-link>
                 <x-utilities.button class="ml-4">Register</x-utilities.button>
             </div>
         </form>

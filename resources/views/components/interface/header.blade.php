@@ -1,5 +1,5 @@
 <header
-    class="z-30 py-4 bg-gray-50 dark:bg-gray-800 shadow-sm border-b border-transparent dark:border-gray-700 relative">
+    class="fixed top-0 left-0 right-0 z-30 h-16 py-4 bg-gray-50 dark:bg-gray-800 shadow-sm border-b border-transparent dark:border-gray-700">
     <div class="flex items-center justify-between h-full px-6 mx-auto text-grey-80 dark:text-grey-5">
         <a href="{{ route('dashboard') }}">
             <x-interface.logo width="w-24"></x-interface.logo>

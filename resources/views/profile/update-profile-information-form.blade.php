@@ -2,11 +2,19 @@
 
     <x-account.form submit="updateProfileInformation">
         <!-- Name -->
-        <div class="mb-2">
-            <x-utilities.label for="name" value="Name"></x-utilities.label>
-            <x-utilities.input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name"
-                               autocomplete="name"></x-utilities.input>
-            <x-utilities.input-error for="name" class="mt-2"></x-utilities.input-error>
+        <div class="flex items-center justify-between mb-2">
+            <div class="pr-2 w-1/2">
+                <x-utilities.label for="first_name" value="First Name"></x-utilities.label>
+                <x-utilities.input id="first_name" type="text" class="mt-1 block" wire:model.defer="state.first_name"
+                                   autocomplete="given-name"></x-utilities.input>
+                <x-utilities.input-error for="first_name" class="mt-2"></x-utilities.input-error>
+            </div>
+            <div class="pl-2 w-1/2">
+                <x-utilities.label for="last_name" value="Last Name"></x-utilities.label>
+                <x-utilities.input id="last_name" type="text" class="mt-1 block" wire:model.defer="state.last_name"
+                                   autocomplete="first_name"></x-utilities.input>
+                <x-utilities.input-error for="family-name" class="mt-2"></x-utilities.input-error>
+            </div>
         </div>
 
         <!-- Email -->
@@ -40,7 +48,7 @@
             document.addEventListener("DOMContentLoaded", () => {
                 Livewire.on('refresh-navigation-dropdown', () => {
                     document.querySelectorAll('.user-name').forEach((name) => {
-                        name.innerHTML = document.getElementById('name').value;
+                        name.innerHTML = document.getElementById('first_name').value + ' ' + document.getElementById('last_name').value;
                     });
 
                     let districtName = document.getElementById('district');
