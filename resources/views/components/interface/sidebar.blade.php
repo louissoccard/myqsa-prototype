@@ -5,7 +5,7 @@
         <x-interface.main-menu></x-interface.main-menu>
 
         <div class="inline-block px-6 mt-4 text-grey-60 dark:text-grey-20">
-            <h5>© Hampshire Scouts {{ date('Y') }}</h5>
+            <h6 class="font-normal">© Hampshire Scouts {{ date('Y') }}</h6>
             <a class="font-bold hover:underline" href="#">Privacy Policy</a>
         </div>
     </div>
@@ -13,7 +13,7 @@
 
 <!-- Mobile sidebar -->
 <aside
-    class="flex fixed inset-y-0 z-20 flex-shrink-0 mt-16 overflow-y-auto bg-gray-50 dark:bg-gray-800 md:hidden min-w-80 max-w-9/10"
+    class="flex fixed inset-y-0 z-20 flex-shrink-0 mt-16 overflow-y-auto bg-gray-50 dark:bg-gray-800 md:hidden min-w-72 max-w-9/10"
     x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
     x-transition:enter-start="opacity-0 transform -translate-x-20" x-transition:enter-end="opacity-100"
     x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
@@ -28,7 +28,7 @@
 
 <!-- Mobile accounts sidebar -->
 <aside
-    class="flex fixed inset-y-0 z-20 flex-shrink-0 mt-16 overflow-y-auto bg-gray-50 dark:bg-gray-800 md:hidden min-w-80 max-w-9/10"
+    class="flex fixed inset-y-0 z-20 flex-shrink-0 mt-16 overflow-y-auto bg-gray-50 dark:bg-gray-800 md:hidden min-w-72 max-w-9/10"
     x-show="isUserMenuOpen" x-transition:enter="transition ease-in-out duration-150"
     x-transition:enter-start="opacity-0 transform -translate-x-20" x-transition:enter-end="opacity-100"
     x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
@@ -41,7 +41,7 @@
         </div>
 
         <div class="inline-block px-6  mt-4 text-grey-60 dark:text-grey-20">
-            <h5>© Hampshire Scouts {{ date('Y') }}</h5>
+            <h6 class="font-normal">© Hampshire Scouts {{ date('Y') }}</h6>
             <a class="font-bold hover:underline" href="#">Privacy Policy</a>
         </div>
 
