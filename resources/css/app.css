@@ -2,6 +2,55 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@layer base {
+    h1 {
+        @apply text-3xl;
+        @apply font-black;
+    }
+    h2 {
+        @apply text-2xl;
+        @apply font-black;
+    }
+    h3 {
+        @apply text-2xl;
+        @apply font-bold;
+    }
+    h4 {
+        @apply text-xl;
+        @apply font-bold;
+    }
+    h5 {
+        @apply text-lg;
+        @apply font-bold;
+    }
+    h6 {
+        @apply font-bold;
+    }
+
+    .markdown h1 {
+        @apply text-2xl;
+        @apply font-black;
+    }
+    .markdown h2 {
+        @apply text-xl;
+        @apply font-bold;
+    }
+    .markdown h3 {
+        @apply text-lg;
+        @apply font-bold;
+    }
+    .markdown h4, .markdown h5, .markdown h6 {
+        @apply font-bold;
+    }
+
+    .markdown ul {
+        list-style: square inside;
+        @apply mb-6;
+        @apply ml-4;
+        @apply mt-2;
+    }
+}
+
 .checkbox-container {
     display: block;
     position: relative;

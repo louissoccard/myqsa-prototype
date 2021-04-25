@@ -68,6 +68,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         Route::get('/admin-centre/clusters', function () {
             return view('admin-centre.clusters.show');
         })->name('clusters');
+
+        Route::get('/changelog', [\App\Http\Controllers\ChangelogController::class, 'show'])->name('changelog');
     });
 });
 

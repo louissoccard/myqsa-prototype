@@ -546,6 +546,69 @@ video {
   height: auto;
 }
 
+h1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 900;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 900;
+}
+
+h3 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+h5 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+h6 {
+  font-weight: 700;
+}
+
+.markdown h1 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 900;
+}
+
+.markdown h2 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+.markdown h3 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+.markdown h4, .markdown h5, .markdown h6 {
+  font-weight: 700;
+}
+
+.markdown ul {
+  list-style: square inside;
+  margin-bottom: 1.5rem;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+}
+
 .container {
   width: 100%;
 }
@@ -13631,6 +13694,10 @@ video {
 
 .min-w-0 {
   min-width: 0px;
+}
+
+.min-w-72 {
+  min-width: 18rem;
 }
 
 .min-w-80 {
@@ -43594,6 +43661,10 @@ video {
     min-width: 0px;
   }
 
+  .sm\:min-w-72 {
+    min-width: 18rem;
+  }
+
   .sm\:min-w-80 {
     min-width: 20rem;
   }
@@ -73410,6 +73481,10 @@ video {
 
   .md\:min-w-0 {
     min-width: 0px;
+  }
+
+  .md\:min-w-72 {
+    min-width: 18rem;
   }
 
   .md\:min-w-80 {
@@ -103230,6 +103305,10 @@ video {
     min-width: 0px;
   }
 
+  .lg\:min-w-72 {
+    min-width: 18rem;
+  }
+
   .lg\:min-w-80 {
     min-width: 20rem;
   }
@@ -133048,6 +133127,10 @@ video {
     min-width: 0px;
   }
 
+  .xl\:min-w-72 {
+    min-width: 18rem;
+  }
+
   .xl\:min-w-80 {
     min-width: 20rem;
   }
@@ -162864,6 +162947,10 @@ video {
 
   .\32xl\:min-w-0 {
     min-width: 0px;
+  }
+
+  .\32xl\:min-w-72 {
+    min-width: 18rem;
   }
 
   .\32xl\:min-w-80 {
