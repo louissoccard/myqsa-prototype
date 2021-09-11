@@ -24,7 +24,7 @@
             <x-utilities.validation-errors class="mt-4"></x-utilities.validation-errors>
 
             <div class="flex items-center justify-end mt-8">
-                <x-utilities.button>Email Password Reset Link</x-utilities.button>
+                <x-utilities.button type="submit">Email Password Reset Link</x-utilities.button>
             </div>
         </form>
     </x-authentication.card>

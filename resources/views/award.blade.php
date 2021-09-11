@@ -11,9 +11,9 @@
                 </a>
             </div>
         </x-slot>
-        <h2 class="text-2xl font-black mt-14 mb-4">Queen's Scout Award</h2>
+        <h2 class="mt-14 mb-4">Queen's Scout Award</h2>
     @else
-        <h2 class="text-2xl font-black mb-4">Your Queen's Scout Award</h2>
+        <h2 class="mb-4">Your Queen's Scout Award</h2>
     @endif
 
 

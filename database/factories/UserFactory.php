@@ -37,4 +37,11 @@ class UserFactory extends Factory
             'district_id'       => District::inRandomOrder()->first()->id,
         ];
     }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->assignRole('participant');
+        });
+    }
 }

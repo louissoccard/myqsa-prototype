@@ -26,7 +26,7 @@
             </x-utilities.message>
             @enderror
 
-            <x-utilities.button>Save</x-utilities.button>
+            <x-utilities.button type="submit">Save</x-utilities.button>
         </x-slot>
 
     </x-account.form>

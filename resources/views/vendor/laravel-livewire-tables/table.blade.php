@@ -26,7 +26,7 @@
             <div>
                 <div class="overflow-x-auto">
                     <table
-                        class="w-full table-fixed bg-grey-5 dark:bg-gray-800 border-b-2 border-grey-20 dark:border-gray-700 mb-4 {{ $table_class }}">
+                        class="w-full table-auto bg-grey-5 dark:bg-gray-800 border-b-2 border-grey-20 dark:border-gray-700 mb-4 {{ $table_class }}">
                         <thead class="{{ $thead_class }}">
                             <tr class="text-left bg-gray-200 dark:bg-grey-80">
                                 @if($checkbox && $checkbox_side == 'left')

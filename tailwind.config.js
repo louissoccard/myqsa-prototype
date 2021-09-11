@@ -48,7 +48,9 @@ module.exports = {
 
         extend: {
             minWidth: {
+                '72': '18rem',
                 '80': '20rem',
+                '1/2': '50%',
             },
 
             maxWidth: {
@@ -64,6 +66,7 @@ module.exports = {
 
             transitionProperty: {
                 'border-color': 'border-color',
+                'text-color': 'color',
             },
 
             zIndex: {

@@ -43,33 +43,48 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
 
-    Route::name('award.')->group(function () {
-        Route::get('/award', [AwardController::class, 'show'])->name('show');
-        Route::get('/award/clear', [AwardController::class, 'clear'])->name('clear');
-        Route::get('/award/membership', [AwardController::class, 'show'])->name('membership');
-        Route::get('/award/nights-away', [AwardController::class, 'show'])->name('nights-away');
-        Route::get('/award/icv-list', [AwardController::class, 'show'])->name('icv-list');
-        Route::get('/award/dofe', [AwardController::class, 'show'])->name('dofe');
-        Route::get('/award/challenges', [AwardController::class, 'show'])->name('challenges');
-        Route::get('/award/presentation', [AwardController::class, 'show'])->name('presentation');
-        Route::get('/award/sign-off', [AwardController::class, 'show'])->name('sign-off');
+    Route::group(['middleware' => ['award.access'], 'as' => 'award.', 'prefix' => 'award'], function () {
+        Route::get('/', [AwardController::class, 'show'])->name('show');
+        Route::get('/clear', [AwardController::class, 'clear'])->name('clear');
+        Route::get('/membership', [AwardController::class, 'show'])->name('membership');
+        Route::get('/nights-away', [AwardController::class, 'show'])->name('nights-away');
+        Route::get('/icv-list', [AwardController::class, 'show'])->name('icv-list');
+        Route::get('/dofe', [AwardController::class, 'show'])->name('dofe');
+        Route::get('/challenges', [AwardController::class, 'show'])->name('challenges');
+        Route::get('/presentation', [AwardController::class, 'show'])->name('presentation');
+        Route::get('/sign-off', [AwardController::class, 'show'])->name('sign-off');
     });
 
-    Route::name('admin-centre.')->group(function () {
-        Route::get('/admin-centre', function () {
+    Route::group([
+        'middleware' => ['my_participants.access'], 'as' => 'my-participants.', 'prefix' => 'my-participants'
+    ], function () {
+        Route::get('/', function () {
+            return view('my-participants');
+        })->name("show");
+
+    });
+
+    Route::group(['middleware' => ['role:admin'], 'as' => 'admin-centre.', 'prefix' => 'admin-centre'], function () {
+        Route::get('/', function () {
             return view('admin-centre');
         })->name('show');
-        Route::get('/admin-centre/accounts', function () {
+        Route::get('/accounts', function () {
             return view('admin-centre.accounts.show');
         })->name('accounts');
-        Route::get('/admin-centre/districts', function () {
+        Route::get('/districts', function () {
             return view('admin-centre.districts.show');
         })->name('districts');
-        Route::get('/admin-centre/clusters', function () {
+        Route::get('/clusters', function () {
             return view('admin-centre.clusters.show');
         })->name('clusters');
 
         Route::get('/changelog', [\App\Http\Controllers\ChangelogController::class, 'show'])->name('changelog');
+        Route::get('/permissions', function () {
+            return view('admin-centre.permissions.show');
+        })->name('permissions');
+        Route::get('/roles', function () {
+            return view('admin-centre.roles.show');
+        })->name('roles');
     });
 });
 

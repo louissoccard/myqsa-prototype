@@ -31,6 +31,6 @@
     </x-slot>
     <x-slot name="footer">
         <x-utilities.button colour="grey-40" class="mr-2" wire:click="closeEditModal">Cancel</x-utilities.button>
-        <x-utilities.button colour="navy" wire:click="editCluster" icon="edit">Update</x-utilities.button>
+        <x-utilities.button type="submit" colour="navy" wire:click="editCluster" icon="edit">Update</x-utilities.button>
     </x-slot>
 </x-utilities.dialog-modal>

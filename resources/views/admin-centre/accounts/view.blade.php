@@ -50,49 +50,63 @@
                     <h5 class="text-xl">{{ $view_modal_current_user->district->name }}</h5>
                 </div>
 
-                <div class="flex flex-wrap flex-row">
-                    <div class="w-2/3 pr-2">
-                        <h5 class="mb-2 text-lg font-bold">Details</h5>
+                <div class="flex flex-wrap flex-col md:flex-row">
+                    <div class="w-full md:w-2/3 md:pr-2 mb-4 md:mb-0">
+                        <h5 class="text-lg font-bold">Details</h5>
                         <div class="mb-2">
                             <p class="text-sm">Email</p>
                             <p>{{ $view_modal_current_user->email }}</p>
                         </div>
-                        <div>
+                        <div class="mb-2">
                             <p class="text-sm">Account created on</p>
                             <p>{{ $view_modal_current_user->created_at->format('d/m/Y') }}</p>
                         </div>
                     </div>
-                    <div class="w-1/3 pl-2">
-                        <h5 class="mb-2 text-lg font-bold">Actions</h5>
-                        @if($this->view_modal_current_user->isNot(Auth::user()))
-                            <x-utilities.dropdown-item icon="edit-2" iconPos="end" paddingX="2"
-                                                       wire:click="showEditModal">
-                                Edit Details
+                    <div class="w-full md:w-1/3 md:pl-2">
+                        <h5 class="text-lg font-bold">Actions</h5>
+                        <div class="mb-4">
+                            <x-utilities.dropdown-item icon="map" iconPos="end" paddingX="2"
+                                                       wire:click="showDistrictsModal">
+                                Change District Access
                             </x-utilities.dropdown-item>
-                            <x-authentication.confirms-password wire:then="showPasswordModal">
-                                <x-utilities.dropdown-item icon="lock" iconPos="end" paddingX="2">Reset Password
+                            @if($this->view_modal_current_user->isNot(Auth::user()))
+                                <x-utilities.dropdown-item icon="edit-2" iconPos="end" paddingX="2"
+                                                           wire:click="showEditModal">
+                                    Edit Details
                                 </x-utilities.dropdown-item>
-                            </x-authentication.confirms-password>
-                            <x-authentication.confirms-password wire:then="showDeleteModal">
-                                <x-utilities.dropdown-item icon="trash-2" iconPos="end" paddingX="2" class="text-red">
-                                    Delete Account
-                                </x-utilities.dropdown-item>
-                            </x-authentication.confirms-password>
-                        @else
-                            <p class="px-2">You cannot change your own account from here. Please
-                                            go to the
-                                <x-utilities.link href="{{ route('account.manage.show') }}">Manage Account
-                                </x-utilities.link>
-                                            page.
-                            </p>
-                        @endif
+                                <x-authentication.confirms-password wire:then="showPasswordModal">
+                                    <x-utilities.dropdown-item icon="lock" iconPos="end" paddingX="2">Reset Password
+                                    </x-utilities.dropdown-item>
+                                </x-authentication.confirms-password>
+                                <x-authentication.confirms-password wire:then="showDeleteModal">
+                                    <x-utilities.dropdown-item icon="trash-2" iconPos="end" paddingX="2"
+                                                               class="text-red">
+                                        Delete Account
+                                    </x-utilities.dropdown-item>
+                                </x-authentication.confirms-password>
+                            @else
+                                <p class="px-2">You cannot change your own account from here. Please
+                                                go to the
+                                    <x-utilities.link href="{{ route('account.manage.show') }}">Manage Account
+                                    </x-utilities.link>
+                                                page.
+                                </p>
+                            @endif
+                        </div>
+                        <h6 class="font-bold">Advanced</h6>
+                        <x-utilities.dropdown-item icon="key" iconPos="end" paddingX="2"
+                                                   wire:click="showPermissionsModal">
+                            Roles and Permissions
+                        </x-utilities.dropdown-item>
                     </div>
                 </div>
 
             </div>
         </x-slot>
         <x-slot name="footer">
-            <x-utilities.button class="mr-2" wire:click="viewUserAward" icon="award">Award</x-utilities.button>
+            @if($view_modal_current_user->hasPermissionTo('qsa.has'))
+                <x-utilities.button class="mr-2" wire:click="viewUserAward" icon="award">Award</x-utilities.button>
+            @endif
             <x-utilities.button colour="grey-60" wire:click="closeViewModal">Close</x-utilities.button>
         </x-slot>
     </x-utilities.dialog-modal>

@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Kdion4891\LaravelLivewireTables\Column;
 use Laravel\Jetstream\ConfirmsPasswords;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 /**
  * Class Table provides the accounts table in the admin centre as a livewire component
  *
- * @package App\Http\Livewire\Admin\Districts
+ * @package App\Http\Livewire\Admin\Accounts
  */
 class Table extends NumberedTableComponent
 {
@@ -74,11 +76,33 @@ class Table extends NumberedTableComponent
     public $edit_modal_email = null;
     public $edit_modal_district_id = null;
 
+    // Districts
+    public $districts_modal_visible = false;
+    public $districts_modal_current = 'none';
+    public $districts_modal_current_can_view = false;
+    public $districts_modal_current_can_edit = false;
+
+
+    // Permissions
+    public $permissions_modal_visible = false;
+    public $roles = null;
+    public $permissions = null;
+
+    public $add_role_modal_visible = false;
+    public $new_role = 'none';
+    public $remove_role_modal_visible = false;
+    public $remove_role = null;
+
+    public $add_permission_modal_visible = false;
+    public $new_permission = 'none';
+    public $remove_permission_modal_visible = false;
+    public $remove_permission = null;
+
     // Adjust the size and positioning of the manage column
     public function thClass($attribute)
     {
         if ($attribute == 'manage') {
-            return 'w-28 text-center';
+            return 'w-12 text-center';
         }
 
         return null;
@@ -87,7 +111,7 @@ class Table extends NumberedTableComponent
     public function tdClass($attribute, $value)
     {
         if ($attribute == 'manage') {
-            return 'w-28 text-center';
+            return 'w-12 text-right';
         }
 
         return null;
@@ -298,5 +322,221 @@ class Table extends NumberedTableComponent
     public function closeEditModal()
     {
         $this->edit_modal_visible = false;
+    }
+
+    // Districts Access
+    public function showDistrictsModal()
+    {
+        $this->districts_modal_visible = true;
+    }
+
+    public function closeDistrictsModal()
+    {
+        $this->districts_modal_visible = false;
+    }
+
+    public function districtUpdated()
+    {
+        if ($this->view_modal_current_user !== null && $this->districts_modal_current !== 'none') {
+            $this->districts_modal_current_can_view = $this->view_modal_current_user->hasPermissionTo("qsa.district.view.{$this->districts_modal_current}");
+            $this->districts_modal_current_can_edit = $this->view_modal_current_user->hasPermissionTo("qsa.district.edit.{$this->districts_modal_current}");
+        }
+    }
+
+    public function grantDistrictView(int $id)
+    {
+        if ( ! $this->view_modal_current_user == null && ! $this->districts_modal_current == null && Permission::where('name',
+                "qsa.district.view.$id")->exists()) {
+            $this->view_modal_current_user->givePermissionTo("qsa.district.view.$id");
+            $this->districtUpdated();
+        }
+    }
+
+    public function revokeDistrictView(int $id)
+    {
+        if ( ! $this->view_modal_current_user == null && ! $this->districts_modal_current == null && Permission::where('name',
+                "qsa.district.view.$id")->exists()) {
+            $this->view_modal_current_user->revokePermissionTo("qsa.district.view.$id");
+            $this->districtUpdated();
+        }
+    }
+
+    public function grantDistrictEdit(int $id)
+    {
+        if ( ! $this->view_modal_current_user == null && ! $this->districts_modal_current == null && Permission::where('name',
+                "qsa.district.edit.$id")->exists()) {
+            $this->view_modal_current_user->givePermissionTo("qsa.district.edit.$id");
+            $this->districtUpdated();
+        }
+    }
+
+    public function revokeDistrictEdit(int $id)
+    {
+        if ( ! $this->view_modal_current_user == null && ! $this->districts_modal_current == null && Permission::where('name',
+                "qsa.district.edit.$id")->exists()) {
+            $this->view_modal_current_user->revokePermissionTo("qsa.district.edit.$id");
+            $this->districtUpdated();
+        }
+    }
+
+
+    // Roles and Permissions
+    public function updateListOfRolesAndPermissions()
+    {
+        $this->roles       = $this->view_modal_current_user->getAllRoles()->all();
+        $this->permissions = $this->view_modal_current_user->getAllPermissions()->all();
+    }
+
+    public function showPermissionsModal()
+    {
+        if ($this->view_modal_current_user !== null) {
+            $this->updateListOfRolesAndPermissions();
+            $this->permissions_modal_visible = true;
+        }
+    }
+
+    public function closePermissionsModal()
+    {
+        $this->permissions_modal_visible = false;
+    }
+
+    public function showAddRoleModal()
+    {
+        $this->add_role_modal_visible = true;
+    }
+
+    public function addRole()
+    {
+        if ($this->new_role !== null && $this->view_modal_current_user !== null) {
+            if ($this->view_modal_current_user->hasRole($this->new_role)) {
+                $this->addError("Cannot add role", "The user already has this role");
+            } elseif ($this->new_role === 'none') {
+                $this->addError("Cannot add role", "You must select a role");
+            } elseif ( ! Role::where('name', $this->new_role)->exists()) {
+                $this->addError("Cannot add role", "This role does not exists");
+            } else {
+                $this->view_modal_current_user->assignRole($this->new_role);
+                $this->new_role = 'none';
+                $this->updateListOfRolesAndPermissions();
+                $this->closeAddRoleModal();
+            }
+
+            return;
+        }
+
+        $this->addError("Cannot add role", "Failed to add the selected role");
+    }
+
+    public function closeAddRoleModal()
+    {
+        $this->add_role_modal_visible = false;
+    }
+
+    public function showRemoveRoleModal()
+    {
+        $this->remove_role_modal_visible = true;
+    }
+
+    public function requestRoleRemoval(Role $role)
+    {
+        $this->remove_role = $role;
+
+        $this->showRemoveRoleModal();
+    }
+
+    public function removeRole()
+    {
+        if ($this->remove_role !== null && $this->view_modal_current_user !== null) {
+            if ( ! $this->view_modal_current_user->hasRole($this->remove_role)) {
+                $this->addError("Cannot remove role", "The user does not have this role");
+            } elseif ( ! Role::where('name', $this->remove_role['name'])->exists()) {
+                $this->addError("Cannot remove role", "This role does not exists");
+            } elseif ($this->view_modal_current_user->getAllRoles()->count() <= 1) {
+                $this->addError("Cannot remove role", "The user must have at least one role");
+            } else {
+                $this->view_modal_current_user->removeRole($this->remove_role["name"]);
+                $this->updateListOfRolesAndPermissions();
+                $this->closeRemoveRoleModal();
+            }
+
+            return;
+        }
+
+        $this->addError("Cannot remove role", "Failed to remove the selected role");
+    }
+
+    public function closeRemoveRoleModal()
+    {
+        $this->remove_role_modal_visible = false;
+    }
+
+    public function showAddPermissionModal()
+    {
+        $this->add_permission_modal_visible = true;
+    }
+
+    public function addPermission()
+    {
+        if ($this->new_permission !== null && $this->view_modal_current_user !== null) {
+            if ($this->view_modal_current_user->hasPermissionTo($this->new_permission)) {
+                $this->addError("Cannot add permission", "The user already has this permission");
+            } elseif ($this->new_permission === 'none') {
+                $this->addError("Cannot add permission", "You must select a permission");
+            } elseif ( ! Permission::where('name', $this->new_permission)->exists()) {
+                $this->addError("Cannot add permission", "This permission does not exists");
+            } else {
+                $this->view_modal_current_user->givePermissionTo($this->new_permission);
+                $this->new_permission = 'none';
+                $this->updateListOfRolesAndPermissions();
+                $this->districtUpdated();
+                $this->closeAddPermissionModal();
+            }
+
+            return;
+        }
+
+        $this->addError("Cannot add permission", "Failed to add the selected permission");
+    }
+
+    public function closeAddPermissionModal()
+    {
+        $this->add_permission_modal_visible = false;
+    }
+
+    public function showRemovePermissionModal()
+    {
+        $this->remove_permission_modal_visible = true;
+    }
+
+    public function requestPermissionRemoval(Permission $permission)
+    {
+        $this->remove_permission = $permission;
+
+        $this->showRemovePermissionModal();
+    }
+
+    public function removePermission()
+    {
+        if ($this->remove_permission !== null && $this->view_modal_current_user !== null) {
+            if ( ! $this->view_modal_current_user->hasPermissionTo($this->remove_permission)) {
+                $this->addError("Cannot remove permission", "The user does not have this permission");
+            } elseif ( ! Permission::where('name', $this->remove_permission['name'])->exists()) {
+                $this->addError("Cannot remove permission", "This permission does not exists");
+            } else {
+                $this->view_modal_current_user->revokePermissionTo($this->remove_permission["name"]);
+                $this->updateListOfRolesAndPermissions();
+                $this->districtUpdated();
+                $this->closeRemovePermissionModal();
+            }
+
+            return;
+        }
+
+        $this->addError("Cannot remove permission", "Failed to remove the selected permission");
+    }
+
+    public function closeRemovePermissionModal()
+    {
+        $this->remove_permission_modal_visible = false;
     }
 }

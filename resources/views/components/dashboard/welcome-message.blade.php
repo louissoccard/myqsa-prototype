@@ -14,4 +14,4 @@
     }
 @endphp
 
-<h1 {{ $attributes->merge(['class' => 'text-2xl font-black']) }}>Good {{ $timeOfDay }}, {{ $firstName }}.</h1>
+<h2 {{ $attributes }}>Good {{ $timeOfDay }}, {{ $firstName }}.</h2>

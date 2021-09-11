@@ -11,9 +11,12 @@ use BaconQrCode\Writer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -105,7 +108,7 @@ class User extends Authenticatable
     /**
      * Get the user's district
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function district()
     {
@@ -132,5 +135,47 @@ class User extends Authenticatable
     {
         $this->attributes['last_name'] = $value;
         $this->attributes['full_name'] = $this->first_name.' '.$value;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function hasDistrictAccess(): bool
+    {
+        $districtPermissions = DB::table('permissions')->where('name', 'like', 'qsa.district.%')->get();
+        $districtPermissions = $districtPermissions->groupBy('name')->keys()->all();
+
+        return $this->hasAnyPermission($districtPermissions);
+    }
+
+    public function getDistrictAccess(): array
+    {
+        $permissions = $this->getAllPermissions()->groupBy('name')->keys()->all();
+
+        $permissions = preg_filter('#^(qsa\.district\.view\.|qsa\.district\.edit\.)#', '', $permissions);
+        $permissions = preg_replace('#^(qsa\.district\.view\.|qsa\.district\.edit\.)#', '', $permissions);
+
+        return array_unique($permissions);
+    }
+
+    public function getAllRoles()
+    {
+        $roles = [];
+
+        foreach ($this->getRoleNames() as $role) {
+            $roles[] = Role::where('name', $role)->get()->first();
+        }
+
+        return collect($roles);
+    }
+
+    public function getPermissionTitles(): Collection
+    {
+        return $this->permissions->pluck('title');
+    }
+
+    public function getRoleTitles(): Collection
+    {
+        return $this->roles->pluck('title');
     }
 }

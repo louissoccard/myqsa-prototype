@@ -15,7 +15,7 @@
             <x-utilities.button wire:click="closeDeleteModal">Okay</x-utilities.button>
         @else
             <x-utilities.button colour="grey-40" class="mr-2" wire:click="closeDeleteModal">Cancel</x-utilities.button>
-            <x-utilities.button colour="red" wire:click="deleteCluster" icon="trash-2">Delete</x-utilities.button>
+            <x-utilities.button type="submit" colour="red" wire:click="deleteCluster" icon="trash-2">Delete</x-utilities.button>
         @endif
     </x-slot>
 </x-utilities.dialog-modal>

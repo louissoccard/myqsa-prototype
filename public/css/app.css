@@ -13720,6 +13720,10 @@ h6 {
   min-width: max-content;
 }
 
+.min-w-1\/2 {
+  min-width: 50%;
+}
+
 .object-contain {
   -o-object-fit: contain;
      object-fit: contain;
@@ -30337,6 +30341,12 @@ h6 {
   transition-duration: 150ms;
 }
 
+.transition-text-color {
+  transition-property: color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .ease-linear {
   transition-timing-function: linear;
 }
@@ -43683,6 +43693,10 @@ h6 {
     min-width: -webkit-max-content;
     min-width: -moz-max-content;
     min-width: max-content;
+  }
+
+  .sm\:min-w-1\/2 {
+    min-width: 50%;
   }
 
   .sm\:object-contain {
@@ -60289,6 +60303,12 @@ h6 {
     transition-duration: 150ms;
   }
 
+  .sm\:transition-text-color {
+    transition-property: color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
   .sm\:ease-linear {
     transition-timing-function: linear;
   }
@@ -73505,6 +73525,10 @@ h6 {
     min-width: -webkit-max-content;
     min-width: -moz-max-content;
     min-width: max-content;
+  }
+
+  .md\:min-w-1\/2 {
+    min-width: 50%;
   }
 
   .md\:object-contain {
@@ -90111,6 +90135,12 @@ h6 {
     transition-duration: 150ms;
   }
 
+  .md\:transition-text-color {
+    transition-property: color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
   .md\:ease-linear {
     transition-timing-function: linear;
   }
@@ -103327,6 +103357,10 @@ h6 {
     min-width: -webkit-max-content;
     min-width: -moz-max-content;
     min-width: max-content;
+  }
+
+  .lg\:min-w-1\/2 {
+    min-width: 50%;
   }
 
   .lg\:object-contain {
@@ -119933,6 +119967,12 @@ h6 {
     transition-duration: 150ms;
   }
 
+  .lg\:transition-text-color {
+    transition-property: color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
   .lg\:ease-linear {
     transition-timing-function: linear;
   }
@@ -133149,6 +133189,10 @@ h6 {
     min-width: -webkit-max-content;
     min-width: -moz-max-content;
     min-width: max-content;
+  }
+
+  .xl\:min-w-1\/2 {
+    min-width: 50%;
   }
 
   .xl\:object-contain {
@@ -149755,6 +149799,12 @@ h6 {
     transition-duration: 150ms;
   }
 
+  .xl\:transition-text-color {
+    transition-property: color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
   .xl\:ease-linear {
     transition-timing-function: linear;
   }
@@ -162971,6 +163021,10 @@ h6 {
     min-width: -webkit-max-content;
     min-width: -moz-max-content;
     min-width: max-content;
+  }
+
+  .\32xl\:min-w-1\/2 {
+    min-width: 50%;
   }
 
   .\32xl\:object-contain {
@@ -179573,6 +179627,12 @@ h6 {
 
   .\32xl\:transition-border-color {
     transition-property: border-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  .\32xl\:transition-text-color {
+    transition-property: color;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
   }
